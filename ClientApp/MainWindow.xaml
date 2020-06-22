@@ -1,0 +1,81 @@
+﻿<Window x:Class="ClientApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm ="clr-namespace:ClientApp.ViewModel"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="400" Width="450"
+        DataContext="{Binding MainVM, Source={StaticResource Locator}}">
+    <Grid DataContext="{Binding }">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="45"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.ColumnSpan="4" Margin="5"
+                   VerticalAlignment="Center" HorizontalAlignment="Center"
+                   Foreground="Black" Background="AliceBlue"
+                   FontSize="32" Text="{Binding CurrentTime}"/>
+        <Button Grid.Column="0" Grid.Row="2" Margin="5"
+                Command="{Binding DataContext.StartTimerCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+                Content="Start Timer"/>
+        <Button Grid.Column="1" Grid.Row="2" Margin="5"
+                Command="{Binding DataContext.StopTimerCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+                Content="Stop Timer">
+            <!--Triggered values-->
+            <!--<Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="IsEnabled" Value="{Binding CanStopTimer}" />
+                    --><!--Triggered values--><!--
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsTimerStart}"
+                                 Value="True">
+                            <Setter Property="IsEnabled" Value="True" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>-->
+        </Button>
+
+
+        <Button Grid.Column="2" Grid.Row="2" Margin="5"                
+                Command="{Binding DataContext.ResetTimerCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+                        Content="Reset Timer">
+            <!--<Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="IsEnabled" Value="{Binding CanResetTimer}" />
+                    --><!--Triggered values--><!--
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=IsTimerStart}"
+                                 Value="True">
+                            <Setter Property="IsEnabled" Value="True" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>-->
+        </Button>
+        <Button Grid.Column="3" Grid.Row="2" Margin="5"
+                Command="{Binding DataContext.ClearLogCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+                Content="Clear Log"/>
+        
+        <TextBox Grid.ColumnSpan="4" Grid.Row="1" Margin="5" Padding="10" IsReadOnly="True"
+                 IsReadOnlyCaretVisible="True"
+                 ScrollViewer.PanningMode="VerticalOnly"
+                 ScrollViewer.VerticalScrollBarVisibility="Auto"
+                 FontSize="14"
+                 TextWrapping="Wrap"
+                 Text="{Binding LogMessage}"
+            />
+
+    </Grid>
+</Window>
